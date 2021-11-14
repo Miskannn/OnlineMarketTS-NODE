@@ -1,0 +1,13 @@
+$light-green: #abdbb8;
+
+
+
+.navLink{
+    color: white;
+    text-decoration: none;
+    &:hover{
+        cursor: pointer;
+        color: $light-green;
+        transition: 1s;
+    }
+}

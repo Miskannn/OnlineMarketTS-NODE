@@ -1,0 +1,42 @@
+$success: #09b06d;
+@mixin flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    background-color: linear-gradient(90deg, #cfecd0, #a0cea7, #9ec0db);
+    @include flex-center();
+}
+
+.row{
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    button{
+        border: 1px solid $success;
+        background-color: white;
+        color: $success;
+        cursor: pointer;
+        font-size: 15px;
+        padding-left: font-size / 2;
+        padding-right:  font-size / 2;
+        align-self: flex-end;
+        &:hover{
+            background-color: $success;
+            color: white;
+            transition: .5s;
+        }
+    }
+   
+}
+
+.navlink{
+    text-decoration: none;
+    color: $success;
+    &:hover{
+        color: linear-gradient(90deg, #cfecd0, #a0cea7, #9ec0db);
+    }
+}
