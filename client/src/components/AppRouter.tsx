@@ -3,7 +3,7 @@ import {Switch,Route,Redirect} from "react-router-dom"
 import { authRoutes, publicRoutes } from '../routes'
 import { UnauthorisedPath } from "../utils/Path";
 import userStore from "../store/userStore";
-
+import "../style/index.scss"
 
 
 const AppRouter = observer(() => {

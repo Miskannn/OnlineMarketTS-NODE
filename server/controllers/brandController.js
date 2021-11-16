@@ -16,7 +16,7 @@ class BrandController{
     deleteOne = async(req,res) => {
         const {id} = req.body
         await Brand.destroy({where: {id}})
-        return res.json(`Device with id ${id} has been removed`)
+        return res.json(`Brand with id ${id} has been removed`)
     }   
     
 

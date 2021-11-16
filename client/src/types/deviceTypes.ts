@@ -13,4 +13,5 @@ export interface IDevice{
     name: string;
     price: number;
     image: string;
+    rating: number;
 }

@@ -6,7 +6,6 @@ $success: #09b06d;
 }
 
 .container{
-    background-color: linear-gradient(90deg, #cfecd0, #a0cea7, #9ec0db);
     @include flex-center();
 }
 
@@ -20,9 +19,8 @@ $success: #09b06d;
         background-color: white;
         color: $success;
         cursor: pointer;
-        font-size: 15px;
-        padding-left: font-size / 2;
-        padding-right:  font-size / 2;
+        font-size: 16px;
+        padding: .5px 10px;
         align-self: flex-end;
         &:hover{
             background-color: $success;

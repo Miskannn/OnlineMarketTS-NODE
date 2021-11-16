@@ -22,9 +22,9 @@ class Device{
   ];
 
   devices: IDevice[] = [
-    {id: 1,name: '12 PRO',price: 25000,image: 'https://www.purposechurch.com/wp-content/uploads/2017/10/fpo400x300.png'},
-    {id: 2,name: 'Galaxy s9',price: 25000,image: 'https://www.purposechurch.com/wp-content/uploads/2017/10/fpo400x300.png'},
-    {id: 3,name: 'Xiaomi',price: 25000,image: 'https://www.purposechurch.com/wp-content/uploads/2017/10/fpo400x300.png'},
+    {id: 1,name: '12 PRO',price: 25000,image: 'https://www.purposechurch.com/wp-content/uploads/2017/10/fpo400x300.png',rating: 5},
+    {id: 2,name: 'Galaxy s9',price: 25000,image: 'https://www.purposechurch.com/wp-content/uploads/2017/10/fpo400x300.png',rating: 5},
+    {id: 3,name: 'Xiaomi',price: 25000,image: 'https://www.purposechurch.com/wp-content/uploads/2017/10/fpo400x300.png',rating: 5},
   ];
 
   selectedType?: IType;

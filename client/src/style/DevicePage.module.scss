@@ -1,0 +1,31 @@
+@mixin flexCenter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.flexCenter{
+    @include flexCenter();
+}
+
+.card{
+    @include flexCenter();
+    flex-direction: column;
+    justify-content: space-around;
+    max-width: 300px;
+    max-height: 300px;
+    
+    border: 5px solid lightblue;
+}
+
+.row{
+    @include flexCenter();
+    flex-direction: column;
+    text-align: center;
+}
+.row2{
+    @include flexCenter();
+    flex-direction: column;
+    margin-top: 10px;
+}
