@@ -7,12 +7,7 @@ class Device{
       makeAutoObservable(this);
   }
   //states
-  types: IType[] = [
-    {id: 1,name: "Smartphones"},
-    {id: 2,name: "Refregerators"},
-    {id: 3,name: "Laptops"},
-    {id: 4,name: "TVs"}
-  ]
+  types: IType[] = []
 
   brands: IBrand[] = [
      {id: 1, name: "Samsung"},
@@ -26,10 +21,11 @@ class Device{
     {id: 2,name: 'Galaxy s9',price: 25000,image: 'https://www.purposechurch.com/wp-content/uploads/2017/10/fpo400x300.png',rating: 5},
     {id: 3,name: 'Xiaomi',price: 25000,image: 'https://www.purposechurch.com/wp-content/uploads/2017/10/fpo400x300.png',rating: 5},
   ];
-
+  
+  //device?: IDevice;
   selectedType?: IType;
   selectedBrand?: IBrand;
-
+  device?: IDevice;
 
   //setters
   setTypes(types: IType[]): void{
@@ -47,7 +43,9 @@ class Device{
   setSelectedBrand(selectedBrand: IBrand){
     this.selectedBrand = selectedBrand;
   }
-
+  setDevice(device: IDevice){
+    this.devices.push(device)
+  }
   //getters
   get getTypes(): IType[]{
     return this.types;
@@ -64,6 +62,7 @@ class Device{
   get getSelectedBrand(): IBrand | undefined{
     return this.selectedBrand;
   }
+  
 }
 
 export default new Device();

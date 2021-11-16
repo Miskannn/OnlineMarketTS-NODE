@@ -5,14 +5,14 @@ import { makeAutoObservable } from "mobx";
         makeAutoObservable(this)
     }
    //states
-    isAuth: boolean = true;
-    user: object = {};
+    isAuth: boolean = false;
+    user: any = {};
     
   //setters
     setIsAuth(isAuth: boolean): void{
         this.isAuth = isAuth;
     }
-    setUser(user: object): void{
+    setUser(user: any): void{
         this.user = user;
     }
     

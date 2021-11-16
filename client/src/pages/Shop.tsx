@@ -3,9 +3,17 @@ import { Container,Col,Row } from 'react-bootstrap';
 import TypeBar from '../components/TypeBar';
 import BrandBar from "../components/BrandBar";
 import DeviceList from '../components/DeviceList';
+import { observer} from 'mobx-react-lite';
+import deviceStore from "../store/deviceStore"
+import { fetchTypes } from '../http/deviceApi';
 
+const Shop = observer(() => {
 
-const Shop = () => {
+ 
+    React.useEffect(() =>{
+      fetchTypes().then((data: any) => deviceStore.setTypes(data))
+    },[])
+
     return (
         <Container>
          <Row>
@@ -19,6 +27,6 @@ const Shop = () => {
          </Row>
         </Container>
     )
-}
+})
 
 export default Shop

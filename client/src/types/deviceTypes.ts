@@ -15,3 +15,9 @@ export interface IDevice{
     image: string;
     rating: number;
 }
+
+export interface IInfo{
+    title: string;
+    description: string;
+    number: number;
+}
