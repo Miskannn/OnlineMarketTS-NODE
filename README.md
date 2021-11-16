@@ -1,3 +1,1 @@
-client - npm run start
-,
-server - npm run prod
+client - npm run start,server - npm run prod
