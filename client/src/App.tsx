@@ -1,34 +1,33 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom';
-import AppRouter from './components/AppRouter';
-import NavBar from './components/Navbar';
-import './style/index.scss';
-import {observer} from "mobx-react-lite"
-import userStore from "./store/userStore"
-import {check} from "./http/userApi"
-import { Spinner } from 'react-bootstrap';
+import React, {useContext, useEffect, useState} from 'react';
+import {BrowserRouter} from "react-router-dom";
+import AppRouter from "./components/AppRouter";
+import NavBar from "./components/Navbar";
+import {observer} from "mobx-react-lite";
+import {Context} from "./index";
+import {check} from "./http/userApi";
+import {Spinner} from "react-bootstrap";
 
 const App = observer(() => {
-  const user = userStore.user;
-  const [loading,setLoading] = React.useState(true);
+    const {user} = useContext(Context)
+    const [loading, setLoading] = useState(true)
 
-  React.useEffect(() => {
-    check().then(data => {
-        user.setUser(true)
-        user.setIsAuth(true)
-    }).finally(() => setLoading(false))
-  })
+    useEffect(() => {
+        check().then(data => {
+            user.setUser(true)
+            user.setIsAuth(true)
+        }).finally(() => setLoading(false))
+    })
 
-if (loading) {
-    return <Spinner animation={"grow"}/>
-}
+    if (loading) {
+        return <Spinner animation={"grow"}/>
+    }
 
-  return (
-    <BrowserRouter>
-      <NavBar />
-      <AppRouter />
-    </BrowserRouter>
-  )
-})
+    return (
+        <BrowserRouter>
+            <NavBar />
+            <AppRouter />
+        </BrowserRouter>
+    );
+});
 
-export default App
+export default App;

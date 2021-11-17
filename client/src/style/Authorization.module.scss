@@ -14,21 +14,20 @@ $success: #09b06d;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    button{
-        border: 1px solid $success;
-        background-color: white;
-        color: $success;
-        cursor: pointer;
-        font-size: 16px;
-        padding: .5px 10px;
-        align-self: flex-end;
-        &:hover{
-            background-color: $success;
-            color: white;
-            transition: .5s;
-        }
-    }
-   
+}
+.button{ 
+    border: 1px solid $success;
+    background-color: white;
+    color: $success;
+    cursor: pointer;
+    font-size: 16px;
+    padding: .5px 10px;
+    align-self: flex-end;
+    &:hover{
+       background-color: $success;
+       color: white;
+       transition: .5s;
+   }
 }
 
 .navlink{

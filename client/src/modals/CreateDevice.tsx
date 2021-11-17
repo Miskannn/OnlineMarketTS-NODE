@@ -1,8 +1,7 @@
-import React, { MouseEventHandler,useState } from 'react'
+import React, { MouseEventHandler,useState,useContext } from 'react'
 import { Modal,Button,Form, Dropdown,Row,Col } from 'react-bootstrap';
-import deviceStore from "../store/deviceStore"
-import { IInfo } from '../types/deviceTypes';
-
+import { IBrand, IInfo, IType } from '../types/deviceTypes';
+import {Context} from "../index"
 
 
 interface CreateDeviceProps{
@@ -13,12 +12,18 @@ interface CreateDeviceProps{
 
 
 const CreateDevice: React.FC<CreateDeviceProps> = ({show,onHide}) => {
-    const device = deviceStore;
-    const [info,setInfo] = useState<IInfo[]>([]);
 
-    const addInfo = () => setInfo([...info, {title: '',description: '',number: Date.now()}])
-    const removeInfo = (infoNumber: number) => setInfo(info.filter(info => infoNumber !== info.number))
-   
+    const {device} = useContext(Context);
+    const [info,setInfo] = useState<IInfo[]>([]);
+    const [name, setName] = useState<string>('');
+    const [price,setPrice] = useState<number>(0);
+    const [file,setFile] = useState<any>(null)
+
+
+    const addInfo = () => setInfo([...info, {title: '',description: '',number: Date.now()}]);
+    const removeInfo = (infoNumber: number) => setInfo(info.filter(info => infoNumber !== info.number));
+    const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => setFile(e.target?.files?.[0]); 
+
     return (
         <Modal
           show={show}
@@ -33,22 +38,49 @@ const CreateDevice: React.FC<CreateDeviceProps> = ({show,onHide}) => {
           </Modal.Header>
           <Modal.Body>
             <Form className='d-flex'>
-                <Dropdown>
-                   <Dropdown.Toggle variant={'outline-success'}>Choose a type</Dropdown.Toggle>
+            <Dropdown className="mt-2 mb-2">
+                   <Dropdown.Toggle>{device?.selectedType?.name || "Сhoose a type"}</Dropdown.Toggle>
                    <Dropdown.Menu>
-                     {device.types.map(item => <Dropdown.Item key={item.id}>{item.name}</Dropdown.Item>)}
-                   </Dropdown.Menu>
+                        {device.types.map((type: IType) =>
+                            <Dropdown.Item
+                               onClick={() => device.setSelectedType(type)}
+                               key={type.id}
+                            >
+                               {type.name}
+                            </Dropdown.Item>
+                       )}
+                    </Dropdown.Menu>
                 </Dropdown>
-                <Dropdown className='ms-1'>
-                   <Dropdown.Toggle variant={'outline-success'}>Choose a brand</Dropdown.Toggle>
+                <Dropdown className="mt-2 mb-2">
+                    <Dropdown.Toggle>{device?.selectedBrand?.name || "Choose a brand"}</Dropdown.Toggle>
                    <Dropdown.Menu>
-                     {device.brands.map(item => <Dropdown.Item key={item.id}>{item.name}</Dropdown.Item>)}
-                   </Dropdown.Menu>
+                        {device.brands.map((brand: IBrand) =>
+                           <Dropdown.Item
+                                onClick={() => device.setSelectedBrand(brand)}
+                                key={brand.id}
+                            >
+                                {brand.name}
+                            </Dropdown.Item>
+                        )}
+                    </Dropdown.Menu>
                 </Dropdown>
                 <Form className="d-flex flex-column">
-                 <Form.Control className="ms-1" placeholder='Enter device name...'/>
-                 <Form.Control type="number" className="ms-1 mt-1" placeholder='Enter device price...'/>
-                 <Form.Control type="file" className="ms-1 mt-1" placeholder='Device photo'/>
+                 <Form.Control
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                   value={name} 
+                   className="ms-1"
+                   placeholder='Enter device name...'/>
+                 <Form.Control
+                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrice(Number(e.target.value))}
+                   value={price}
+                   type="number" 
+                   className="ms-1 mt-1" 
+                   placeholder='Enter device price...'/>
+                 <Form.Control
+                  onChange={selectFile} 
+                  type="file" 
+                  className="ms-1 mt-1" 
+                  placeholder='Device photo'/>
                  <br />
                  <Button onClick={addInfo} variant={'outline-dark'}>Create new property</Button>
                  {info.map(item =>
