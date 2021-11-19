@@ -6,6 +6,7 @@ import DeviceList from '../components/DeviceList';
 import { observer} from 'mobx-react-lite';
 import {fetchTypes,fetchBrands,fetchDevices} from '../http/deviceApi';
 import { Context } from '../index';
+import Paginatio from "../components/Pagination"
 
 const Shop = observer(() => {
     const {device} = React.useContext(Context)
@@ -25,6 +26,7 @@ const Shop = observer(() => {
              <Col xs={10} sm={10} md={10} lg={10}>
                 <BrandBar />
                 <DeviceList />
+                <Paginatio />
              </Col>
          </Row>
         </Container>

@@ -1,12 +1,12 @@
-import React, { MouseEventHandler,useState,useContext } from 'react'
+import React, { MouseEventHandler,useState,useContext, ChangeEvent } from 'react'
 import { Modal,Button,Form, Dropdown,Row,Col } from 'react-bootstrap';
 import { IBrand, IInfo, IType } from '../types/deviceTypes';
 import {Context} from "../index"
-
+import {createDevice} from "../http/deviceApi";
 
 interface CreateDeviceProps{
     show: boolean;
-    onHide?: MouseEventHandler<HTMLButtonElement>;
+    onHide: MouseEventHandler<HTMLButtonElement>;
 }
 
 
@@ -16,13 +16,26 @@ const CreateDevice: React.FC<CreateDeviceProps> = ({show,onHide}) => {
     const {device} = useContext(Context);
     const [info,setInfo] = useState<IInfo[]>([]);
     const [name, setName] = useState<string>('');
-    const [price,setPrice] = useState<number>(0);
+    const [price,setPrice] = useState<number | string>(0);
     const [file,setFile] = useState<any>(null)
 
 
     const addInfo = () => setInfo([...info, {title: '',description: '',number: Date.now()}]);
     const removeInfo = (infoNumber: number) => setInfo(info.filter(info => infoNumber !== info.number));
     const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => setFile(e.target?.files?.[0]); 
+    const changeInfo = (key: any,value: any,num: number) => setInfo(info.map(i => i.number === num ? {...i, [key]: value} : i))
+    
+    const addDevice = () => {
+      const fD = new FormData()
+      fD.append('name', name)
+      fD.append('price', `${price}`)
+      fD.append('img', file)
+      fD.append('brandId', device.selectedBrand.id)
+      fD.append('typeId', device.selectedType.id)
+      fD.append('info', JSON.stringify(info))
+      createDevice(fD).then(data => onHide())
+    }
+
 
     return (
         <Modal
@@ -85,16 +98,20 @@ const CreateDevice: React.FC<CreateDeviceProps> = ({show,onHide}) => {
                  <Button onClick={addInfo} variant={'outline-dark'}>Create new property</Button>
                  {info.map(item =>
                  <Row key={item.number} className='mt-1'>
-                   <Col xs={4} sm={4} md={4} lg={4}><Form.Control placeholder="Enter property name"></Form.Control></Col>
-                   <Col xs={4} sm={4} md={4} lg={4}><Form.Control placeholder="Enter property description"></Form.Control></Col>
-                   <Col xs={4} sm={4} md={4} lg={4}><Button variant="outline-danger" onClick={() => removeInfo(item.number)}>Remove</Button></Col>
+                   <Col xs={4} sm={4} md={4} lg={4}>
+                     <Form.Control onChange={(e: ChangeEvent<HTMLInputElement>) => changeInfo('title', e.target.value, item.number)} value={item.title} placeholder="Property name"></Form.Control></Col>
+                   <Col xs={4} sm={4} md={4} lg={4}>
+                     <Form.Control onChange={(e: ChangeEvent<HTMLInputElement>) => changeInfo('description', e.target.value, item.number)} value={item.description} placeholder="Description"></Form.Control></Col>
+                   <Col xs={4} sm={4} md={4} lg={4}>
+                     <Button variant="outline-danger" onClick={() => removeInfo(item.number)}>Remove</Button>
+                   </Col>
                  </Row>)}
                 </Form>
             </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant='outline-danger' onClick={onHide}>Close</Button>
-            <Button variant='outline-success' onClick={onHide}>Create</Button>
+            <Button variant='outline-success' onClick={addDevice}>Create</Button>
           </Modal.Footer>
         </Modal>
       );    
