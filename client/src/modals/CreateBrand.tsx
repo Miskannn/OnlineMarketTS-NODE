@@ -9,10 +9,10 @@ interface CreateBrandProps{
 }
 
 const CreateBrand: React.FC<CreateBrandProps> = ({show,onHide}) => {
-    const [value,setValue] = useState<any>('');
+    const [value,setValue] = useState<string | undefined>('');
 
     const addBrand = () => {
-      createBrand({name: value}).then(data => {
+      createBrand({name: value}).then(() => {
           setValue('')
           onHide()
       })

@@ -22,3 +22,8 @@ export interface IInfo{
     description: string;
     number: number;
 }
+
+export interface IPagi{
+    rows: number[];
+    count: number[];
+}

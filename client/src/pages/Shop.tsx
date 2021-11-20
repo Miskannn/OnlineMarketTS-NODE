@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Container,Col,Row } from 'react-bootstrap';
 import TypeBar from '../components/TypeBar';
 import BrandBar from "../components/BrandBar";
@@ -7,15 +7,25 @@ import { observer} from 'mobx-react-lite';
 import {fetchTypes,fetchBrands,fetchDevices} from '../http/deviceApi';
 import { Context } from '../index';
 import Paginatio from "../components/Pagination"
+import {IPagi} from '../types/deviceTypes';
 
 const Shop = observer(() => {
     const {device} = React.useContext(Context)
  
-    React.useEffect(() =>{
-      fetchTypes().then((data: any) => device.setTypes(data));
-      fetchBrands().then((data: any) => device.setBrands(data));
-      fetchDevices().then((data: any) => device.setDevices(data.rows));
+    useEffect(() =>{
+      fetchTypes().then((data: string[]) => device.setTypes(data));
+      fetchBrands().then((data: string[]) => device.setBrands(data));
+      fetchDevices().then((data: IPagi) => {
+          device.setDevices(data?.rows);
+          device.setTotalCount(data?.count)
+      });
     })
+    useEffect(() =>{
+        fetchDevices(device.selectedType.id,device.selectedBrand.id,device.page,5).then((data: IPagi) => {
+            device.setDevices(data?.rows);
+            device.setTotalCount(data?.count)
+        })
+    },[device.page, device.selectedType, device.selectedBrand,device])
 
     return (
         <Container>
