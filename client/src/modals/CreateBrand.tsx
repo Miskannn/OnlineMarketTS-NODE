@@ -5,7 +5,7 @@ import {createBrand} from "../http/deviceApi"
 
 interface CreateBrandProps{
     show: boolean;
-    onHide: MouseEventHandler<HTMLButtonElement>;
+    onHide: () => void;
 }
 
 const CreateBrand: React.FC<CreateBrandProps> = ({show,onHide}) => {
@@ -31,7 +31,7 @@ const CreateBrand: React.FC<CreateBrandProps> = ({show,onHide}) => {
           </Modal.Header>
           <Modal.Body>
             <Form>
-                <Form.Control 
+                <Form.Control
                         value={value}
                         onChange={e => setValue(e?.target?.value)}
                         placeholder={"Введите название типа"}/>
@@ -42,7 +42,7 @@ const CreateBrand: React.FC<CreateBrandProps> = ({show,onHide}) => {
             <Button variant='outline-success' onClick={addBrand}>Create</Button>
           </Modal.Footer>
         </Modal>
-      );    
+      );
 }
 
 export default CreateBrand

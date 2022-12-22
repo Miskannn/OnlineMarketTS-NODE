@@ -6,7 +6,7 @@ import {createDevice} from "../http/deviceApi";
 
 interface CreateDeviceProps{
     show: boolean;
-    onHide: MouseEventHandler<HTMLButtonElement>;
+    onHide: () => void;
 }
 
 
@@ -22,17 +22,17 @@ const CreateDevice: React.FC<CreateDeviceProps> = ({show,onHide}) => {
 
     const addInfo = () => setInfo([...info, {title: '',description: '',number: Date.now()}]);
     const removeInfo = (infoNumber: number) => setInfo(info.filter(info => infoNumber !== info.number));
-    const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => setFile(e.target?.files?.[0]); 
+    const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => setFile(e.target?.files?.[0]);
     const changeInfo = (key: any,value: any,num: number) => setInfo(info.map(i => i.number === num ? {...i, [key]: value} : i))
-    
+
     const addDevice = () => {
       const fD = new FormData()
-      fD.append('name', name)
-      fD.append('price', `${price}`)
-      fD.append('img', file)
-      fD.append('brandId', device.selectedBrand.id)
-      fD.append('typeId', device.selectedType.id)
-      fD.append('info', JSON.stringify(info))
+      name && fD.append('name', name)
+      price && fD.append('price', `${price}`)
+      file && fD.append('img', file)
+      device && device.selectedBrand.id &&fD.append('brandId', device.selectedBrand.id)
+      device && device.selectedType.id && fD.append('typeId', device.selectedType.id)
+      info && fD.append('info', JSON.stringify(info))
       createDevice(fD).then(data => onHide())
     }
 
@@ -80,19 +80,19 @@ const CreateDevice: React.FC<CreateDeviceProps> = ({show,onHide}) => {
                 <Form className="d-flex flex-column">
                  <Form.Control
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-                   value={name} 
+                   value={name}
                    className="ms-1"
                    placeholder='Enter device name...'/>
                  <Form.Control
                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrice(Number(e.target.value))}
                    value={price}
-                   type="number" 
-                   className="ms-1 mt-1" 
+                   type="number"
+                   className="ms-1 mt-1"
                    placeholder='Enter device price...'/>
                  <Form.Control
-                  onChange={selectFile} 
-                  type="file" 
-                  className="ms-1 mt-1" 
+                  onChange={selectFile}
+                  type="file"
+                  className="ms-1 mt-1"
                   placeholder='Device photo'/>
                  <br />
                  <Button onClick={addInfo} variant={'outline-dark'}>Create new property</Button>
@@ -114,7 +114,7 @@ const CreateDevice: React.FC<CreateDeviceProps> = ({show,onHide}) => {
             <Button variant='outline-success' onClick={addDevice}>Create</Button>
           </Modal.Footer>
         </Modal>
-      );    
+      );
 }
 
 export default CreateDevice

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import AdminPage from "./pages/AdminPage";
 import Authorization from "./pages/Authorization";
 import Basket from "./pages/Basket";

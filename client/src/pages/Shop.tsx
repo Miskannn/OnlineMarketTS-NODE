@@ -11,7 +11,7 @@ import {IPagi} from '../types/deviceTypes';
 
 const Shop = observer(() => {
     const {device} = React.useContext(Context)
- 
+
     useEffect(() =>{
       fetchTypes().then((data: string[]) => device.setTypes(data));
       fetchBrands().then((data: string[]) => device.setBrands(data));
@@ -19,12 +19,16 @@ const Shop = observer(() => {
           device.setDevices(data?.rows);
           device.setTotalCount(data?.count)
       });
-    })
+    }, [])
     useEffect(() =>{
-        fetchDevices(device.selectedType.id,device.selectedBrand.id,device.page,5).then((data: IPagi) => {
-            device.setDevices(data?.rows);
-            device.setTotalCount(data?.count)
-        })
+        try {
+            fetchDevices(device.selectedType.id, device.selectedBrand.id, device.page, 5).then((data: IPagi) => {
+                device.setDevices(data?.rows);
+                device.setTotalCount(data?.count)
+            })
+        } catch (e) {
+            console.log(e)
+        }
     },[device.page, device.selectedType, device.selectedBrand,device])
 
     return (
