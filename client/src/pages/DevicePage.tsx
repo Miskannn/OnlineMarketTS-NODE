@@ -9,13 +9,13 @@ import { fetchOneDevice } from '../http/deviceApi'
 
 
 const DevicePage = () => {
-    
+
     const [device,setDevice] = React.useState<IDevice>({info: []});
     const {id} = useParams<any>();
 
     React.useEffect(() => {
           fetchOneDevice(id).then(data => setDevice(data))
-    })
+    }, [])
     return (
         <Container className="mt-3">
             <Row>

@@ -30,8 +30,8 @@ const CreateDevice: React.FC<CreateDeviceProps> = ({show,onHide}) => {
       name && fD.append('name', name)
       price && fD.append('price', `${price}`)
       file && fD.append('img', file)
-      device && device.selectedBrand.id &&fD.append('brandId', device.selectedBrand.id)
-      device && device.selectedType.id && fD.append('typeId', device.selectedType.id)
+      device && device?.selectedBrand?.id &&fD.append('brandId', device?.selectedBrand?.id)
+      device && device?.selectedType?.id && fD.append('typeId', device?.selectedType?.id)
       info && fD.append('info', JSON.stringify(info))
       createDevice(fD).then(data => onHide())
     }
